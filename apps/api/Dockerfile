@@ -30,6 +30,11 @@ FROM node:20-bookworm-slim AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 
+# Install OpenSSL for Prisma engine at runtime
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openssl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy built app and dependencies from builder
 COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/apps/api/dist ./dist
