@@ -211,9 +211,9 @@ Dear Flowbit Team,
 I am excited to submit my completed Full Stack Developer Internship assignment. Please find below the details:
 
 🔗 **Live Application**
-- Frontend: https://your-app.vercel.app
-- Backend API: https://your-api.vercel.app
-- Vanna AI Service: https://your-vanna.onrender.com
+- Frontend: https://flowbit-analytics-web-two.vercel.app
+- Backend API: https://flowbit-ai-58t0.onrender.com
+- Vanna AI Service: https://vanna-gq7r.onrender.com
 
 📦 **GitHub Repository**
 - Repository: https://github.com/yourusername/flowbit-analytics

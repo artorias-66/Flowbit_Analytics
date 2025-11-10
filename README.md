@@ -267,9 +267,9 @@ Update `.env` with production values:
 
 ```
 DATABASE_URL=postgresql://user:pass@host:5432/db?sslmode=require
-VANNA_API_BASE_URL=https://your-vanna-service.render.com
-GROQ_API_KEY=your-production-groq-key
-NEXT_PUBLIC_API_BASE=https://your-api.vercel.app
+VANNA_API_BASE_URL=https://vanna-gq7r.onrender.com
+GROQ_API_KEY=<redacted-your-groq-key>
+NEXT_PUBLIC_API_BASE=https://flowbit-ai-58t0.onrender.com
 ```
 
 ## 🧪 Testing

@@ -5,9 +5,9 @@ Target length: 3–5 minutes.
 
 ## Prep (before recording)
 - Ensure live URLs are ready:
-  - Web (Vercel): https://<your-web>.vercel.app
-  - API (Render): https://<your-api>.onrender.com
-  - Vanna (Render): https://<your-vanna>.onrender.com
+  - Web (Vercel): https://flowbit-analytics-web-two.vercel.app
+  - API (Render): https://flowbit-ai-58t0.onrender.com
+  - Vanna (Render): https://vanna-gq7r.onrender.com
 - Confirm environment variables are set in hosting providers.
 - Keep one browser tab open per URL.
 
@@ -29,11 +29,11 @@ Target length: 3–5 minutes.
 - Click around the dashboard pages: `/dashboard`, `/chat`.
 
 3) API Health (20–30s)
-- Open the API health endpoint in a new tab: `https://<your-api>.onrender.com/health`.
+- Open the API health endpoint in a new tab: `https://flowbit-ai-58t0.onrender.com/health`.
 - Briefly explain: “This confirms the Express API is running and reachable by the frontend.”
 
 4) Vanna AI Health (20–30s)
-- Open the Vanna health endpoint: `https://<your-vanna>.onrender.com/health`.
+- Open the Vanna health endpoint: `https://vanna-gq7r.onrender.com/health`.
 - Explain: “FastAPI service for NL→SQL; trained on the same Postgres schema.”
 
 5) AI Chat Demo (60–90s)

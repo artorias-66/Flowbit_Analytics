@@ -291,14 +291,14 @@ customers (1) ────┘                       payments (1)
 DATABASE_URL=postgresql://user:pass@host:5432/db
 
 # Vanna AI Service
-VANNA_API_BASE_URL=http://localhost:8000
+VANNA_API_BASE_URL=https://vanna-gq7r.onrender.com
 VANNA_API_KEY=your-key
 
 # Groq LLM
 GROQ_API_KEY=your-groq-key
 
 # Frontend URLs
-NEXT_PUBLIC_API_BASE=http://localhost:3001
+NEXT_PUBLIC_API_BASE=https://flowbit-ai-58t0.onrender.com
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 # Backend

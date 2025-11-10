@@ -96,9 +96,9 @@ Go to your Vercel project dashboard → Settings → Environment Variables
 Add:
 ```
 DATABASE_URL=your-production-database-url
-VANNA_API_BASE_URL=https://your-vanna-service.onrender.com
-NEXT_PUBLIC_API_BASE=https://your-api.vercel.app
-NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
+VANNA_API_BASE_URL=https://vanna-gq7r.onrender.com
+NEXT_PUBLIC_API_BASE=https://flowbit-ai-58t0.onrender.com
+NEXT_PUBLIC_APP_URL=https://flowbit-analytics-web-two.vercel.app
 ```
 
 ### 5. Redeploy with New Environment Variables
@@ -211,7 +211,7 @@ Update `apps/api/src/index.ts` for production origins:
 ```typescript
 app.use(cors({
   origin: [
-    'https://your-frontend.vercel.app',
+    'https://flowbit-analytics-web-two.vercel.app',
     'https://your-custom-domain.com'
   ],
   credentials: true
@@ -233,18 +233,18 @@ Test each service:
 
 ```powershell
 # Test frontend
-curl https://your-app.vercel.app
+curl https://flowbit-analytics-web-two.vercel.app
 
 # Test backend API
-curl https://your-api.vercel.app/health
+curl https://flowbit-ai-58t0.onrender.com/health
 
 # Test Vanna AI service
-curl https://your-vanna.onrender.com/health
+curl https://vanna-gq7r.onrender.com/health
 ```
 
 Test the chat feature:
 ```powershell
-curl -X POST https://your-vanna.onrender.com/chat `
+curl -X POST https://vanna-gq7r.onrender.com/chat `
   -H "Content-Type: application/json" `
   -d '{"question":"What are the top 5 vendors?"}'
 ```
@@ -335,9 +335,9 @@ vercel --prod
 ## 🎉 Success!
 
 Your application is now live at:
-- Frontend: https://your-app.vercel.app
-- Backend: https://your-api.vercel.app
-- Vanna AI: https://your-vanna.onrender.com
+- Frontend: https://flowbit-analytics-web-two.vercel.app
+- Backend: https://flowbit-ai-58t0.onrender.com
+- Vanna AI: https://vanna-gq7r.onrender.com
 
 Share these URLs in your internship submission!
 
