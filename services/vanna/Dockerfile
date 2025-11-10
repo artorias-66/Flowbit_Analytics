@@ -19,5 +19,5 @@ COPY services/vanna/ ./
 # Expose port
 EXPOSE 8000
 
-# Start
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start (use Render's PORT when provided, default to 8000 for local)
+CMD ["sh", "-lc", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
