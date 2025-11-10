@@ -34,8 +34,10 @@ class VannaGroq(VannaDefault):
         import requests
         
         if not self.groq_api_key:
+            print("❌ GROQ_API_KEY not set")
             raise ValueError("GROQ_API_KEY not set")
         
+        print(f"📤 Sending to Groq: {prompt[:200]}...")
         try:
             response = requests.post(
                 "https://api.groq.com/openai/v1/chat/completions",
@@ -48,16 +50,22 @@ class VannaGroq(VannaDefault):
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0.1,
                     "max_tokens": 500
-                }
+                },
+                timeout=30
             )
             response.raise_for_status()
-            return response.json()["choices"][0]["message"]["content"]
+            result = response.json()["choices"][0]["message"]["content"]
+            print(f"📥 Groq response: {result[:200]}...")
+            return result
         except Exception as e:
-            print(f"Groq API error: {e}")
+            print(f"❌ Groq API error: {type(e).__name__}: {str(e)}")
             return None
 
 vn = VannaGroq(model=VANNA_MODEL, api_key=GROQ_API_KEY)
-print(f"🤖 Vanna initialized with Groq (model: llama-3.3-70b-versatile)")
+if GROQ_API_KEY:
+    print(f"🤖 Vanna initialized with Groq (model: llama-3.3-70b-versatile, key: {GROQ_API_KEY[:20]}...)")
+else:
+    print("⚠️ WARNING: GROQ_API_KEY not set - AI generation will fail!")
 
 
 def _is_postgres(url: str) -> bool:
@@ -198,11 +206,22 @@ async def chat(request: ChatRequest):
     conn = None
     cursor = None
     try:
-        sql = vn.generate_sql(question)
+        # Try AI generation with detailed logging
+        print(f"🤔 Question: {question}")
+        try:
+            sql = vn.generate_sql(question)
+            print(f"🤖 AI generated SQL: {sql}")
+        except Exception as ai_error:
+            print(f"❌ AI generation error: {ai_error}")
+            sql = None
+        
         fallback_used = False
         if not sql:
+            print("⚠️ AI failed, trying fallback...")
             sql = _fallback_sql(question)
             fallback_used = True if sql else False
+            if sql:
+                print(f"✅ Fallback SQL: {sql}")
         if not sql:
             raise HTTPException(status_code=400, detail="Could not generate SQL from question (no fallback matched)")
 
