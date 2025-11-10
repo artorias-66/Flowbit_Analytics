@@ -1,0 +1,168 @@
+[[{
+  "_id": "sample-invoice-001",
+  "extractedData": {
+    "llmData": {
+      "invoice": {
+        "value": {
+          "invoiceId": { "value": "INV-2025-001" },
+          "invoiceDate": { "value": "2025-01-15" },
+          "deliveryDate": { "value": "2025-01-20" }
+        }
+      },
+      "vendor": {
+        "value": {
+          "vendorName": { "value": "Acme Corporation" },
+          "vendorAddress": { "value": "123 Business St, Berlin, Germany" },
+          "vendorTaxId": { "value": "DE123456789" }
+        }
+      },
+      "customer": {
+        "value": {
+          "customerName": { "value": "Tech Solutions GmbH" },
+          "customerAddress": { "value": "456 Tech Ave, Munich, Germany" },
+          "customerTaxId": { "value": "DE987654321" }
+        }
+      },
+      "payment": {
+        "value": {
+          "dueDate": { "value": "2025-02-15" },
+          "paymentTerms": { "value": "Net 30" },
+          "bankAccountNumber": { "value": "DE89370400440532013000" }
+        }
+      },
+      "summary": {
+        "value": {
+          "subTotal": { "value": 1000 },
+          "totalTax": { "value": 190 },
+          "invoiceTotal": { "value": 1190 }
+        }
+      },
+      "lineItems": {
+        "value": {
+          "items": {
+            "value": [
+              {
+                "description": { "value": "Professional Services" },
+                "quantity": { "value": 10 },
+                "unitPrice": { "value": 100 },
+                "totalPrice": { "value": 1000 }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+},
+{
+  "_id": "sample-invoice-002",
+  "extractedData": {
+    "llmData": {
+      "invoice": {
+        "value": {
+          "invoiceId": { "value": "INV-2025-002" },
+          "invoiceDate": { "value": "2025-02-01" },
+          "deliveryDate": { "value": "2025-02-05" }
+        }
+      },
+      "vendor": {
+        "value": {
+          "vendorName": { "value": "Global Tech GmbH" },
+          "vendorAddress": { "value": "789 Innovation Blvd, Hamburg, Germany" },
+          "vendorTaxId": { "value": "DE111222333" }
+        }
+      },
+      "customer": {
+        "value": {
+          "customerName": { "value": "Digital Services AG" },
+          "customerAddress": { "value": "321 Digital Way, Frankfurt, Germany" },
+          "customerTaxId": { "value": "DE444555666" }
+        }
+      },
+      "payment": {
+        "value": {
+          "dueDate": { "value": "2025-03-03" },
+          "paymentTerms": { "value": "Net 30" },
+          "bankAccountNumber": { "value": "DE89370400440532013001" }
+        }
+      },
+      "summary": {
+        "value": {
+          "subTotal": { "value": 2500 },
+          "totalTax": { "value": 475 },
+          "invoiceTotal": { "value": 2975 }
+        }
+      },
+      "lineItems": {
+        "value": {
+          "items": {
+            "value": [
+              {
+                "description": { "value": "Software License" },
+                "quantity": { "value": 5 },
+                "unitPrice": { "value": 500 },
+                "totalPrice": { "value": 2500 }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+},
+{
+  "_id": "sample-invoice-003",
+  "extractedData": {
+    "llmData": {
+      "invoice": {
+        "value": {
+          "invoiceId": { "value": "INV-2025-003" },
+          "invoiceDate": { "value": "2025-02-15" },
+          "deliveryDate": { "value": "2025-02-20" }
+        }
+      },
+      "vendor": {
+        "value": {
+          "vendorName": { "value": "Enterprise Solutions Ltd" },
+          "vendorAddress": { "value": "555 Enterprise Dr, Stuttgart, Germany" },
+          "vendorTaxId": { "value": "DE777888999" }
+        }
+      },
+      "customer": {
+        "value": {
+          "customerName": { "value": "Innovation Inc" },
+          "customerAddress": { "value": "222 Innovation St, Cologne, Germany" },
+          "customerTaxId": { "value": "DE000111222" }
+        }
+      },
+      "payment": {
+        "value": {
+          "dueDate": { "value": "2025-03-17" },
+          "paymentTerms": { "value": "Net 30" },
+          "bankAccountNumber": { "value": "DE89370400440532013002" }
+        }
+      },
+      "summary": {
+        "value": {
+          "subTotal": { "value": 3750 },
+          "totalTax": { "value": 712.50 },
+          "invoiceTotal": { "value": 4462.50 }
+        }
+      },
+      "lineItems": {
+        "value": {
+          "items": {
+            "value": [
+              {
+                "description": { "value": "Consulting Services" },
+                "quantity": { "value": 25 },
+                "unitPrice": { "value": 150 },
+                "totalPrice": { "value": 3750 }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}]]

@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: flowbit-api
+    env_file:
+      - .env.production.example
+    environment:
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+  vanna:
+    build:
+      context: .
+      dockerfile: services/vanna/Dockerfile
+    container_name: flowbit-vanna
+    env_file:
+      - .env.production.example
+    environment:
+      - VANNA_PORT=8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - api
+    restart: unless-stopped
+# For Next.js we recommend Vercel; add a container here only if self-hosting is required.
