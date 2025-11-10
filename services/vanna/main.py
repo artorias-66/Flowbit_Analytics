@@ -23,8 +23,41 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize Vanna AI
-vn = VannaDefault(model=VANNA_MODEL, api_key=GROQ_API_KEY)
+# Initialize Vanna AI with Groq
+class VannaGroq(VannaDefault):
+    def __init__(self, model: str = None, api_key: str = None):
+        super().__init__(model=model, api_key=api_key)
+        self.groq_api_key = api_key
+    
+    def submit_prompt(self, prompt, **kwargs):
+        """Override to use Groq's LLM instead of default"""
+        import requests
+        
+        if not self.groq_api_key:
+            raise ValueError("GROQ_API_KEY not set")
+        
+        try:
+            response = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {self.groq_api_key}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "llama-3.3-70b-versatile",
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0.1,
+                    "max_tokens": 500
+                }
+            )
+            response.raise_for_status()
+            return response.json()["choices"][0]["message"]["content"]
+        except Exception as e:
+            print(f"Groq API error: {e}")
+            return None
+
+vn = VannaGroq(model=VANNA_MODEL, api_key=GROQ_API_KEY)
+print(f"🤖 Vanna initialized with Groq (model: llama-3.3-70b-versatile)")
 
 
 def _is_postgres(url: str) -> bool:
