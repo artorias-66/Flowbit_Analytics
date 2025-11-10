@@ -199,6 +199,77 @@ def _fallback_sql(question: str) -> Optional[str]:
         return "SELECT SUM(total_with_vat) AS total_spend FROM invoices;"
     return None
 
+def _generate_sql_with_groq(question: str) -> Optional[str]:
+    """Generate SQL directly using Groq without Vanna training dependency."""
+    import requests
+    
+    if not GROQ_API_KEY:
+        return None
+    
+    # Get schema info
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        if DATABASE_URL and _is_postgres(DATABASE_URL):
+            cursor.execute("""
+                SELECT table_name, column_name, data_type 
+                FROM information_schema.columns 
+                WHERE table_schema = 'public' 
+                ORDER BY table_name, ordinal_position
+            """)
+            schema_info = cursor.fetchall()
+            schema_text = "\n".join([f"Table: {t}, Column: {c}, Type: {d}" for t, c, d in schema_info])
+        else:
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            tables = [r[0] for r in cursor.fetchall()]
+            schema_parts = []
+            for table in tables:
+                cursor.execute(f"PRAGMA table_info({table})")
+                cols = cursor.fetchall()
+                schema_parts.append(f"Table {table}: " + ", ".join([f"{c[1]} {c[2]}" for c in cols]))
+            schema_text = "\n".join(schema_parts)
+        
+        cursor.close()
+        conn.close()
+    except Exception as e:
+        print(f"Schema error: {e}")
+        schema_text = "invoices, vendors, customers, line_items, payments tables"
+    
+    prompt = f"""You are a SQL expert. Generate a PostgreSQL query for this question.
+Database schema:
+{schema_text}
+
+Question: {question}
+
+Return ONLY the SQL query, no explanations. Use proper PostgreSQL syntax."""
+    
+    print(f"📤 Groq prompt: {prompt[:300]}...")
+    try:
+        response = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {GROQ_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "llama-3.3-70b-versatile",
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.1,
+                "max_tokens": 500
+            },
+            timeout=30
+        )
+        response.raise_for_status()
+        sql = response.json()["choices"][0]["message"]["content"].strip()
+        # Clean up markdown code blocks if present
+        sql = sql.replace("```sql", "").replace("```", "").strip()
+        print(f"✅ Groq SQL: {sql}")
+        return sql
+    except Exception as e:
+        print(f"❌ Groq error: {e}")
+        return None
+
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     """Natural language to SQL query endpoint with fallback patterns."""
@@ -206,18 +277,14 @@ async def chat(request: ChatRequest):
     conn = None
     cursor = None
     try:
-        # Try AI generation with detailed logging
         print(f"🤔 Question: {question}")
-        try:
-            sql = vn.generate_sql(question)
-            print(f"🤖 AI generated SQL: {sql}")
-        except Exception as ai_error:
-            print(f"❌ AI generation error: {ai_error}")
-            sql = None
         
+        # Try direct Groq generation first
+        sql = _generate_sql_with_groq(question)
         fallback_used = False
+        
         if not sql:
-            print("⚠️ AI failed, trying fallback...")
+            print("⚠️ Groq failed, trying fallback...")
             sql = _fallback_sql(question)
             fallback_used = True if sql else False
             if sql:
