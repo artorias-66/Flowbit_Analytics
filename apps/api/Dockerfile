@@ -1,10 +1,12 @@
 # syntax=docker/dockerfile:1
-FROM node:20-alpine AS base
+FROM node:20-bookworm-slim AS base
 
 WORKDIR /app
 
-# Install OS deps
-RUN apk add --no-cache openssl
+# Install OS deps (openssl for Prisma engines)
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends openssl ca-certificates \
+	&& rm -rf /var/lib/apt/lists/*
 
 # Copy root and workspace manifests
 COPY package.json package-lock.json tsconfig.json turbo.json ./
@@ -25,7 +27,7 @@ COPY apps/api/src ./src
 RUN npm run build
 
 # Runtime image
-FROM node:20-alpine AS runtime
+FROM node:20-bookworm-slim AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 
