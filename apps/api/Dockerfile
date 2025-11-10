@@ -46,4 +46,4 @@ EXPOSE 3001
 
 # Start: create/update schema then start server
 ENV PRISMA_SCHEMA_PATH=prisma/schema.postgres.prisma
-CMD ["sh", "-lc", "npx prisma db push --schema=$PRISMA_SCHEMA_PATH && node dist/index.js"]
+CMD ["sh", "-lc", "npx prisma db push --accept-data-loss --schema=$PRISMA_SCHEMA_PATH && node dist/index.js"]
