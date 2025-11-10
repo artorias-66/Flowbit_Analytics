@@ -2,7 +2,8 @@ import { Router } from "express";
 import axios from "axios";
 
 const router = Router();
-const VANNA_API_BASE = process.env.VANNA_API_BASE_URL || "http://localhost:8000";
+// Remove trailing slash from base URL to prevent double-slash in path
+const VANNA_API_BASE = (process.env.VANNA_API_BASE_URL || "http://localhost:8000").replace(/\/$/, "");
 
 // POST /api/chat - Proxy to Vanna AI service
 router.post("/", async (req, res) => {
