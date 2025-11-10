@@ -15,9 +15,9 @@ router.get("/", async (req, res) => {
           search
             ? {
                 OR: [
-                  { invoiceNumber: { contains: search as string, mode: "insensitive" } },
-                  { vendor: { name: { contains: search as string, mode: "insensitive" } } },
-                  { customer: { name: { contains: search as string, mode: "insensitive" } } },
+                  { invoiceNumber: { contains: search as string } },
+                  { vendor: { name: { contains: search as string } } },
+                  { customer: { name: { contains: search as string } } },
                 ],
               }
             : {},
